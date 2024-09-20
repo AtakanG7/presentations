@@ -1,6 +1,6 @@
 # Project Overview
-
-## kubernetes-infra
+This repository is to store my presentations.
+# kubernetes-infra
 
 # Cloud Agnostic Design Using Kubernetes, Helm, and Jenkins
 
