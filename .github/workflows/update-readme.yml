@@ -30,13 +30,15 @@ jobs:
                       return f.read().strip()
               return "No README found in this folder."
           
-          main_readme = "# Project Overview\n\n"
+          main_readme = "# Project Overview\n\n This repository is to store my presentations."
           
           for item in os.listdir('.'):
               if os.path.isdir(item) and not item.startswith('.'):
-                  main_readme += f"## {item}\n\n"
+                  main_readme += f"´´´"
+                  main_readme += f"# {item}\n\n"
                   main_readme += get_folder_readme(item)
                   main_readme += "\n\n"
+                  main_readme += f"´´´"
           
           with open('README.md', 'w') as f:
               f.write(main_readme)
