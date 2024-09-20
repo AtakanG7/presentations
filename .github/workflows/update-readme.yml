@@ -24,12 +24,13 @@ jobs:
 
       - name: Commit and Push Changes
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}  # Use GitHub Secret for security
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git diff --exit-code || (
             git add README.md
             git commit -m "Update README.md with project structure"
+            git remote set-url origin https://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@github.com/AtakanG7/presentations.git
             git push origin main
           )
