@@ -30,7 +30,7 @@ jobs:
                       return f.read().strip()
               return "No README found in this folder."
           
-          main_readme = "# Project Overview\n\n This repository is to store my presentations."
+          main_readme = "# About the Repository\n\n This repository is to store my presentations.\n\n"
           
           for item in os.listdir('.'):
               if os.path.isdir(item) and not item.startswith('.'):
