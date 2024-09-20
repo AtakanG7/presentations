@@ -1,0 +1,28 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Generate Project Structure
+        run: |
+          echo "# Project Structure" > README.md
+          echo "" >> README.md
+          tree -L 2 >> README.md || echo "tree command not found; install it" >> README.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update README.md with project structure" || echo "No changes to commit"
+          git push
