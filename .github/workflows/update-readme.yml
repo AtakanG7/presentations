@@ -20,9 +20,11 @@ jobs:
           tree -L 2 >> README.md || echo "tree command not found; install it" >> README.md
 
       - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
           git commit -m "Update README.md with project structure" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/AtakanG7/presentations.git HEAD:main
