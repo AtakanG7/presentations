@@ -21,10 +21,10 @@ jobs:
 
       - name: Commit and Push Changes
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Optional; this is set by default
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
           git commit -m "Update README.md with project structure" || echo "No changes to commit"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/AtakanG7/presentations.git HEAD:main
+          git push origin main  # Uses the GITHUB_TOKEN automatically for authentication
