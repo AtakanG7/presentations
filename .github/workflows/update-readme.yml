@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install Tree
+        run: sudo apt-get install -y tree
+
       - name: Generate Project Structure
         run: |
           echo "# Project Structure" > README.md
@@ -21,10 +24,12 @@ jobs:
 
       - name: Commit and Push Changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Optional; this is set by default
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add README.md
-          git commit -m "Update README.md with project structure" || echo "No changes to commit"
-          git push origin main  # Uses the GITHUB_TOKEN automatically for authentication
+          git diff --exit-code || (
+            git add README.md
+            git commit -m "Update README.md with project structure"
+            git push origin main
+          )
