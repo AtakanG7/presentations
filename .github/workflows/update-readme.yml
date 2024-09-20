@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -23,22 +24,18 @@ jobs:
         run: |
           import os
           
-          def get_folder_readme(folder):
+          def get_folder_readme_link(folder):
               readme_path = os.path.join(folder, 'README.md')
               if os.path.exists(readme_path):
-                  with open(readme_path, 'r') as f:
-                      return f.read().strip()
-              return "No README found in this folder."
+                  return f"- [{folder}](./{folder}/README.md)\n"
+              return f"- {folder} (No README found)\n"
           
-          main_readme = "# About the Repository\n\n This repository is to store my presentations.\n\n"
+          main_readme = "# Repository Overview\n\n"
+          main_readme += "This repository contains presentations and related resources. Below is the list of available directories with links to their README files:\n\n"
           
           for item in os.listdir('.'):
               if os.path.isdir(item) and not item.startswith('.'):
-                  main_readme += f"``` \n\n"
-                  main_readme += f"# {item}\n\n"
-                  main_readme += get_folder_readme(item)
-                  main_readme += "\n\n"
-                  main_readme += f"```"
+                  main_readme += get_folder_readme_link(item)
           
           with open('README.md', 'w') as f:
               f.write(main_readme)
