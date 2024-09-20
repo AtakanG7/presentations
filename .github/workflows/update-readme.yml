@@ -1,4 +1,4 @@
-name: Update README
+name: Update Main README
 
 on:
   push:
@@ -14,18 +14,37 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install Tree
-        run: sudo apt-get install -y tree
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-      - name: Generate Project Structure
+      - name: Update README
         run: |
-          echo "# Project Structure" > README.md
-          echo "" >> README.md
-          tree -L 2 >> README.md || echo "tree command not found; install it" >> README.md
+          import os
+          
+          def get_folder_readme(folder):
+              readme_path = os.path.join(folder, 'README.md')
+              if os.path.exists(readme_path):
+                  with open(readme_path, 'r') as f:
+                      return f.read().strip()
+              return "No README found in this folder."
+          
+          main_readme = "# Project Overview\n\n"
+          
+          for item in os.listdir('.'):
+              if os.path.isdir(item) and not item.startswith('.'):
+                  main_readme += f"## {item}\n\n"
+                  main_readme += get_folder_readme(item)
+                  main_readme += "\n\n"
+          
+          with open('README.md', 'w') as f:
+              f.write(main_readme)
+        shell: python
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add README.md
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update README.md with project structure" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update main README.md with folder contents" && git push)
