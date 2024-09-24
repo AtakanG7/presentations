@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Mesh and Istio: Advanced Microservices Communication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        #slideContainer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', monospace;
+        }
+        .code-snippet {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="slideContainer">
+        <div class="slide active">
+            <h1>Azure Container Apps: Modernizing Application Deployment</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="50" font-size="24" font-weight="bold" text-anchor="middle" fill="#0078d4">Azure Container Apps</text>
+                    <rect x="50" y="80" width="400" height="180" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="110" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Serverless Container Platform</text>
+                    <rect x="80" y="130" width="160" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="160" y="185" font-size="16" fill="white" text-anchor="middle">Containers</text>
+                    <rect x="260" y="130" width="160" height="100" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="340" y="185" font-size="16" fill="#333333" text-anchor="middle">Azure Services</text>
+                </svg>
+            </div>
+        </div>
+        
+        
+        <div class="slide">
+            <h1>Azure Container Apps Capabilities</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="580" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <text x="400" y="40" font-size="24" font-weight="bold" text-anchor="middle" fill="#0078d4">Azure Container Apps Capabilities</text>
+                    
+                    <!-- Serverless Scaling -->
+                    <rect x="30" y="60" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="140" y="90" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Serverless Scaling</text>
+                    <text x="140" y="115" font-size="12" fill="white" text-anchor="middle">• HTTP-based autoscaling</text>
+                    <text x="140" y="135" font-size="12" fill="white" text-anchor="middle">• Event-driven scaling (KEDA)</text>
+                    
+                    <!-- Microservices Architecture -->
+                    <rect x="290" y="60" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="400" y="90" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Microservices Architecture</text>
+                    <text x="400" y="115" font-size="12" fill="white" text-anchor="middle">• Multiple apps per environment</text>
+                    <text x="400" y="135" font-size="12" fill="white" text-anchor="middle">• Inter-app communication</text>
+                    
+                    <!-- CI/CD Integration -->
+                    <rect x="550" y="60" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="660" y="90" font-size="16" fill="white" text-anchor="middle" font-weight="bold">CI/CD Integration</text>
+                    <text x="660" y="115" font-size="12" fill="white" text-anchor="middle">• GitHub Actions support</text>
+                    <text x="660" y="135" font-size="12" fill="white" text-anchor="middle">• Azure Pipelines integration</text>
+                    
+                    <!-- Traffic Management -->
+                    <rect x="30" y="180" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="140" y="210" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Traffic Management</text>
+                    <text x="140" y="235" font-size="12" fill="white" text-anchor="middle">• Ingress controller</text>
+                    <text x="140" y="255" font-size="12" fill="white" text-anchor="middle">• Split traffic between revisions</text>
+                    
+                    <!-- Revisions and Versioning -->
+                    <rect x="290" y="180" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="400" y="210" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Revisions and Versioning</text>
+                    <text x="400" y="235" font-size="12" fill="white" text-anchor="middle">• Multiple revisions per app</text>
+                    <text x="400" y="255" font-size="12" fill="white" text-anchor="middle">• Easy rollback</text>
+                    
+                    <!-- Dapr Integration -->
+                    <rect x="550" y="180" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="660" y="210" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Dapr Integration</text>
+                    <text x="660" y="235" font-size="12" fill="white" text-anchor="middle">• Built-in Dapr support</text>
+                    <text x="660" y="255" font-size="12" fill="white" text-anchor="middle">• Simplify microservices development</text>
+                    
+                    <!-- Persistent Storage -->
+                    <rect x="30" y="300" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="140" y="330" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Persistent Storage</text>
+                    <text x="140" y="355" font-size="12" fill="white" text-anchor="middle">• Azure Files integration</text>
+                    <text x="140" y="375" font-size="12" fill="white" text-anchor="middle">• Persistent volumes</text>
+                    
+                    <!-- Networking -->
+                    <rect x="290" y="300" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="400" y="330" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Networking</text>
+                    <text x="400" y="355" font-size="12" fill="white" text-anchor="middle">• Virtual Network integration</text>
+                    <text x="400" y="375" font-size="12" fill="white" text-anchor="middle">• Private ingress/egress</text>
+                    
+                    <!-- Monitoring and Logging -->
+                    <rect x="550" y="300" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="660" y="330" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Monitoring and Logging</text>
+                    <text x="660" y="355" font-size="12" fill="white" text-anchor="middle">• Azure Monitor integration</text>
+                    <text x="660" y="375" font-size="12" fill="white" text-anchor="middle">• Log Analytics</text>
+                    
+                    <!-- Security -->
+                    <rect x="30" y="420" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="140" y="450" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Security</text>
+                    <text x="140" y="475" font-size="12" fill="white" text-anchor="middle">• Managed identities</text>
+                    <text x="140" y="495" font-size="12" fill="white" text-anchor="middle">• Azure Key Vault integration</text>
+                    
+                    <!-- Environment Variables -->
+                    <rect x="290" y="420" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="400" y="450" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Environment Variables</text>
+                    <text x="400" y="475" font-size="12" fill="white" text-anchor="middle">• Configuration settings</text>
+                    <text x="400" y="495" font-size="12" fill="white" text-anchor="middle">• Secrets management</text>
+                    
+                    <!-- Container Support -->
+                    <rect x="550" y="420" width="220" height="100" fill="#0078d4" stroke="#005a9e" stroke-width="2" rx="10"/>
+                    <text x="660" y="450" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Container Support</text>
+                    <text x="660" y="475" font-size="12" fill="white" text-anchor="middle">• Windows and Linux containers</text>
+                    <text x="660" y="495" font-size="12" fill="white" text-anchor="middle">• Custom container registries</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Azure Container Apps Architecture</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Container App Environment</text>
+                    <rect x="50" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="110" y="125" font-size="14" fill="white" text-anchor="middle">Container App 1</text>
+                    <rect x="190" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="250" y="125" font-size="14" fill="white" text-anchor="middle">Container App 2</text>
+                    <rect x="330" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="390" y="125" font-size="14" fill="white" text-anchor="middle">Container App 3</text>
+                    <rect x="50" y="170" width="400" height="40" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="195" font-size="14" fill="#333333" text-anchor="middle">Shared Infrastructure (Networking, Logging, etc.)</text>
+                    <rect x="50" y="220" width="190" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="145" y="240" font-size="12" fill="#333333" text-anchor="middle">Virtual Network</text>
+                    <rect x="260" y="220" width="190" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="355" y="240" font-size="12" fill="#333333" text-anchor="middle">Log Analytics</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Serverless Scaling in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Automatic Scaling</text>
+                    <rect x="50" y="90" width="80" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="90" y="125" font-size="14" fill="white" text-anchor="middle">Instance</text>
+                    <rect x="140" y="90" width="80" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="180" y="125" font-size="14" fill="white" text-anchor="middle">Instance</text>
+                    <rect x="230" y="90" width="80" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="270" y="125" font-size="14" fill="white" text-anchor="middle">Instance</text>
+                    <rect x="320" y="90" width="80" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="360" y="125" font-size="14" fill="#333333" text-anchor="middle">New</text>
+                    <path d="M250 170 L250 200 L50 200 L50 230" fill="none" stroke="#0078d4" stroke-width="2"/>
+                    <path d="M250 170 L250 200 L450 200 L450 230" fill="none" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="230" width="200" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="130" y="250" font-size="12" fill="#333333" text-anchor="middle">HTTP Requests</text>
+                    <rect x="270" y="230" width="200" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="370" y="250" font-size="12" fill="#333333" text-anchor="middle">Event-driven (KEDA)</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Microservices and Traffic Management</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Traffic Management</text>
+                    <rect x="50" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="110" y="125" font-size="14" fill="white" text-anchor="middle">Service A v1</text>
+                    <rect x="190" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="250" y="125" font-size="14" fill="white" text-anchor="middle">Service A v2</text>
+                    <rect x="330" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="390" y="125" font-size="14" fill="white" text-anchor="middle">Service B</text>
+                    <path d="M250 170 L250 200 L110 200 L110 160" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M250 170 L250 200 L250 160" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M250 170 L250 200 L390 200 L390 160" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <rect x="30" y="230" width="440" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="250" font-size="12" fill="#333333" text-anchor="middle">Ingress Controller (HTTP, gRPC)</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>CI/CD and Revisions</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">CI/CD and Revisions</text>
+                    <rect x="50" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="100" y="125" font-size="14" fill="white" text-anchor="middle">Git Repo</text>
+                    <rect x="170" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="220" y="125" font-size="14" fill="white" text-anchor="middle">CI/CD Pipeline</text>
+                    <rect x="290" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="340" y="125" font-size="14" fill="white" text-anchor="middle">New Revision</text>
+                    <path d="M150 120 L170 120" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M270 120 L290 120" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <rect x="50" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="100" y="205" font-size="14" fill="#333333" text-anchor="middle">Revision 1</text>
+                    <rect x="170" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="220" y="205" font-size="14" fill="#333333" text-anchor="middle">Revision 2</text>
+                    <rect x="290" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="340" y="205" font-size="14" fill="#333333" text-anchor="middle">Revision 3</text>
+                    <path d="M340 150 L340 170" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Dapr Integration in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Dapr Integration</text>
+                    
+                    <rect x="50" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="100" y="125" font-size="14" fill="white" text-anchor="middle">Service A</text>
+                    
+                    <rect x="350" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="400" y="125" font-size="14" fill="white" text-anchor="middle">Service B</text>
+                    
+                    <rect x="180" y="140" width="140" height="80" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="170" font-size="16" fill="#333333" text-anchor="middle">Dapr Sidecar</text>
+                    <text x="250" y="190" font-size="12" fill="#333333" text-anchor="middle">Service Invocation</text>
+                    <text x="250" y="210" font-size="12" fill="#333333" text-anchor="middle">State Management</text>
+                    
+                    <path d="M150 120 L180 160" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M320 160 L350 120" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <rect x="50" y="230" width="100" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="100" y="250" font-size="12" fill="#333333" text-anchor="middle">Pub/Sub</text>
+                    
+                    <rect x="200" y="230" width="100" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="250" font-size="12" fill="#333333" text-anchor="middle">Bindings</text>
+                    
+                    <rect x="350" y="230" width="100" height="30" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="400" y="250" font-size="12" fill="#333333" text-anchor="middle">Observability</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Persistent Storage in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Persistent Storage</text>
+                    
+                    <rect x="50" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="100" y="125" font-size="14" fill="white" text-anchor="middle">Container 1</text>
+                    
+                    <rect x="200" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="250" y="125" font-size="14" fill="white" text-anchor="middle">Container 2</text>
+                    
+                    <rect x="350" y="90" width="100" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="400" y="125" font-size="14" fill="white" text-anchor="middle">Container 3</text>
+                    
+                    <rect x="100" y="190" width="300" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="225" font-size="16" fill="#333333" text-anchor="middle">Azure Files (Persistent Storage)</text>
+                    
+                    <path d="M100 150 L100 190" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M250 150 L250 190" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M400 150 L400 190" fill="none" stroke="#0078d4" stroke-width="2" marker-end="url(#arrowhead)"/>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Networking in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Networking Features</text>
+                    
+                    <rect x="50" y="90" width="180" height="80" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="140" y="125" font-size="14" fill="white" text-anchor="middle">Virtual Network</text>
+                    <text x="140" y="145" font-size="12" fill="white" text-anchor="middle">Private Ingress/Egress</text>
+                    
+                    <rect x="270" y="90" width="180" height="80" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="360" y="125" font-size="14" fill="white" text-anchor="middle">Network Security</text>
+                    <text x="360" y="145" font-size="12" fill="white" text-anchor="middle">Isolation &amp; Policies</text>
+                    
+                    <rect x="50" y="190" width="180" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="140" y="225" font-size="14" fill="#333333" text-anchor="middle">Service-to-Service</text>
+                    <text x="140" y="245" font-size="12" fill="#333333" text-anchor="middle">Communication</text>
+                    
+                    <rect x="270" y="190" width="180" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="360" y="225" font-size="14" fill="#333333" text-anchor="middle">Firewall Rules</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Security Features in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Security Features</text>
+                    
+                    <rect x="50" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="110" y="125" font-size="14" fill="white" text-anchor="middle">Managed Identities</text>
+                    
+                    <rect x="190" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="250" y="125" font-size="14" fill="white" text-anchor="middle">Azure Key Vault</text>
+                    
+                    <rect x="330" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="390" y="125" font-size="14" fill="white" text-anchor="middle">RBAC</text>
+                    
+                    <rect x="50" y="170" width="200" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="150" y="205" font-size="14" fill="#333333" text-anchor="middle">Network Isolation</text>
+                    
+                    <rect x="270" y="170" width="180" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="360" y="205" font-size="14" fill="#333333" text-anchor="middle">Encryption</text>
+                    <text x="360" y="225" font-size="12" fill="#333333" text-anchor="middle">(At Rest &amp; In Transit)</text>
+                </svg>
+            </div>
+        </div>
+        
+        <div class="slide">
+            <h1>Monitoring and Logging in Azure Container Apps</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f0f0f0" stroke="#0078d4" stroke-width="2"/>
+                    <rect x="30" y="40" width="440" height="220" fill="#ffffff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="250" y="70" font-size="18" font-weight="bold" text-anchor="middle" fill="#0078d4">Monitoring and Logging</text>
+                    
+                    <rect x="50" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="110" y="125" font-size="14" fill="white" text-anchor="middle">Azure Monitor</text>
+                    
+                    <rect x="190" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="250" y="125" font-size="14" fill="white" text-anchor="middle">Log Analytics</text>
+                    
+                    <rect x="330" y="90" width="120" height="60" fill="#0078d4" stroke="#005a9e" stroke-width="2"/>
+                    <text x="390" y="115" font-size="14" fill="white" text-anchor="middle">Application</text>
+                    <text x="390" y="135" font-size="14" fill="white" text-anchor="middle">Insights</text>
+                    
+                    <rect x="50" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="100" y="205" font-size="14" fill="#333333" text-anchor="middle">Real-time</text>
+                    <text x="100" y="225" font-size="14" fill="#333333" text-anchor="middle">Metrics</text>
+                    
+                    <rect x="170" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="220" y="205" font-size="14" fill="#333333" text-anchor="middle">Custom</text>
+                    <text x="220" y="225" font-size="14" fill="#333333" text-anchor="middle">Dashboards</text>
+                    
+                    <rect x="290" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="340" y="205" font-size="14" fill="#333333" text-anchor="middle">Distributed</text>
+                    <text x="340" y="225" font-size="14" fill="#333333" text-anchor="middle">Tracing</text>
+                    
+                    <rect x="410" y="170" width="100" height="60" fill="#50e6ff" stroke="#0078d4" stroke-width="2"/>
+                    <text x="460" y="205" font-size="14" fill="#333333" text-anchor="middle">Performance</text>
+                    <text x="460" y="225" font-size="14" fill="#333333" text-anchor="middle">Analysis</text>
+                </svg>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <div class="controls">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowRight") nextSlide();
+            if (e.key === "ArrowLeft") prevSlide();
+        });
+    </script>
+    
+</body>
+</html>
