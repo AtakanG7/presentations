@@ -1,0 +1,63 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Interactive Presentations</title>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f4; }
+            h1 { color: #333; text-align: center; }
+            #presentationsList { list-style-type: none; padding: 0; }
+            .presentation-item { background-color: #fff; margin-bottom: 10px; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: background-color 0.3s; }
+            .presentation-item:hover { background-color: #f0f0f0; }
+            #presentationContent { margin-top: 20px; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+            .hidden { display: none; }
+            #backButton { display: none; margin-top: 10px; padding: 10px 15px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+            #backButton:hover { background-color: #0056b3; }
+        </style>
+    </head>
+    <body>
+        <h1>Interactive Presentations</h1>
+        <ul id="presentationsList"></ul>
+        <div id="presentationContent" class="hidden"></div>
+        <button id="backButton">Back to List</button>
+
+        <script>
+            const presentations = [{"name": "azure-contaier-apps", "path": "azure-contaier-apps/index.html"}, {"name": "azure-security-concepts", "path": "azure-security-concepts/index.html"}, {"name": "dapr", "path": "dapr/index.html"}, {"name": "istio", "path": "istio/index.html"}, {"name": "kubernetes-infra", "path": "kubernetes-infra/index.html"}, {"name": "mesh-network", "path": "mesh-network/index.html"}, {"name": "network-mesh", "path": "network-mesh/index.html"}];
+            const listEl = document.getElementById('presentationsList');
+            const contentEl = document.getElementById('presentationContent');
+            const backButton = document.getElementById('backButton');
+
+            presentations.forEach(pres => {
+                const li = document.createElement('li');
+                li.className = 'presentation-item';
+                li.textContent = pres.name;
+                li.onclick = () => loadPresentation(pres.path);
+                listEl.appendChild(li);
+            });
+
+            function loadPresentation(path) {
+                fetch(path)
+                    .then(response => response.text())
+                    .then(html => {
+                        contentEl.innerHTML = html;
+                        listEl.classList.add('hidden');
+                        contentEl.classList.remove('hidden');
+                        backButton.style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error loading presentation:', error);
+                        contentEl.innerHTML = '<p>Error loading presentation. Please try again.</p>';
+                    });
+            }
+
+            backButton.onclick = () => {
+                listEl.classList.remove('hidden');
+                contentEl.classList.add('hidden');
+                backButton.style.display = 'none';
+            };
+        </script>
+    </body>
+    </html>
+    
