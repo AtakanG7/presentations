@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dapr: Essential Concepts and Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        #slideContainer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .slide {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            display: block;
+        }
+        .diagram svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="slideContainer">
+        <div class="slide active">
+            <h1>Dapr: Essential Concepts and Architecture</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f5f5f5" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="250" y="50" font-size="24" font-weight="bold" text-anchor="middle">Dapr Overview</text>
+                    <rect x="50" y="80" width="400" height="180" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+                    <text x="250" y="110" font-size="18" font-weight="bold" text-anchor="middle">Distributed Application Runtime</text>
+                    <rect x="80" y="130" width="160" height="100" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="160" y="185" font-size="16" fill="white" text-anchor="middle">Application</text>
+                    <rect x="260" y="130" width="160" height="100" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+                    <text x="340" y="185" font-size="16" fill="white" text-anchor="middle">Dapr Sidecar</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Dapr Sidecar Architecture</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="280" fill="#f5f5f5" stroke="#2c3e50" stroke-width="2"/>
+                    <rect x="30" y="40" width="200" height="220" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+                    <text x="130" y="70" font-size="18" font-weight="bold" text-anchor="middle">Application</text>
+                    <rect x="50" y="90" width="160" height="150" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="130" y="170" font-size="16" fill="white" text-anchor="middle">Business Logic</text>
+                    <rect x="270" y="40" width="200" height="220" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+                    <text x="370" y="70" font-size="18" font-weight="bold" text-anchor="middle">Dapr Sidecar</text>
+                    <rect x="290" y="90" width="160" height="40" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+                    <text x="370" y="115" font-size="14" fill="white" text-anchor="middle">API</text>
+                    <rect x="290" y="140" width="160" height="100" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+                    <text x="370" y="195" font-size="14" fill="white" text-anchor="middle">Building Blocks</text>
+                    <path d="M230 150 L270 150" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <path d="M270 180 L230 180" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Dapr Building Blocks</h1>
+            <div class="diagram">
+                <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="480" height="380" fill="#f5f5f5" stroke="#2c3e50" stroke-width="2"/>
+                    <text x="250" y="40" font-size="24" font-weight="bold" text-anchor="middle">Dapr Building Blocks</text>
+                    <rect x="50" y="60" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="140" y="100" font-size="16" fill="white" text-anchor="middle">Service Invocation</text>
+                    <rect x="270" y="60" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="360" y="100" font-size="16" fill="white" text-anchor="middle">State Management</text>
+                    <rect x="50" y="150" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="140" y="190" font-size="16" fill="white" text-anchor="middle">Publish/Subscribe</text>
+                    <rect x="270" y="150" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="360" y="190" font-size="16" fill="white" text-anchor="middle">Resource Bindings</text>
+                    <rect x="50" y="240" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="140" y="280" font-size="16" fill="white" text-anchor="middle">Actors</text>
+                    <rect x="270" y="240" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="360" y="280" font-size="16" fill="white" text-anchor="middle">Observability</text>
+                    <rect x="160" y="330" width="180" height="70" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                    <text x="250" y="370" font-size="16" fill="white" text-anchor="middle">Secrets Management</text>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="controls"></div>
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "ArrowRight") nextSlide();
+            if (e.key === "ArrowLeft") prevSlide();
+        });
+    </script>
+    
+</body>
+</html>
