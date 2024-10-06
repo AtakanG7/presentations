@@ -1,4 +1,4 @@
-name: Update Main README
+name: Update Interactive index.html for GitHub Pages
 
 on:
   push:
@@ -6,11 +6,10 @@ on:
       - main
 
 jobs:
-  update-readme:
+  update-index:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -20,30 +19,90 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Update README
+      - name: Create interactive index.html
         run: |
           import os
-          
-          def get_folder_readme_link(folder):
-              readme_path = os.path.join(folder, 'README.md')
-              if os.path.exists(readme_path):
-                  return f"- [{folder}](./{folder}/README.md)\n"
-              return f"- {folder} (No README found)\n"
-          
-          main_readme = "# Repository Overview\n\n"
-          main_readme += "This repository contains presentations and related resources. Below is the list of available directories with links to their README files:\n\n"
-          
-          for item in os.listdir('.'):
-              if os.path.isdir(item) and not item.startswith('.'):
-                  main_readme += get_folder_readme_link(item)
-          
-          with open('README.md', 'w') as f:
-              f.write(main_readme)
+          import json
+
+          def create_index_html():
+              presentations = []
+              for item in sorted(os.listdir('.')):
+                  if os.path.isdir(item) and not item.startswith('.'):
+                      presentations.append({"name": item, "path": f"{item}/index.html"})
+
+              html_content = """
+              <!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Interactive Presentations</title>
+                  <style>
+                      body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f4; }
+                      h1 { color: #333; text-align: center; }
+                      #presentationsList { list-style-type: none; padding: 0; }
+                      .presentation-item { background-color: #fff; margin-bottom: 10px; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: background-color 0.3s; }
+                      .presentation-item:hover { background-color: #f0f0f0; }
+                      #presentationContent { margin-top: 20px; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+                      .hidden { display: none; }
+                      #backButton { display: none; margin-top: 10px; padding: 10px 15px; background-color: #0066cc; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+                      #backButton:hover { background-color: #0056b3; }
+                  </style>
+              </head>
+              <body>
+                  <h1>Interactive Presentations</h1>
+                  <ul id="presentationsList"></ul>
+                  <div id="presentationContent" class="hidden"></div>
+                  <button id="backButton">Back to List</button>
+
+                  <script>
+                      const presentations = """ + json.dumps(presentations) + """;
+                      const listEl = document.getElementById('presentationsList');
+                      const contentEl = document.getElementById('presentationContent');
+                      const backButton = document.getElementById('backButton');
+
+                      presentations.forEach(pres => {
+                          const li = document.createElement('li');
+                          li.className = 'presentation-item';
+                          li.textContent = pres.name;
+                          li.onclick = () => loadPresentation(pres.path);
+                          listEl.appendChild(li);
+                      });
+
+                      function loadPresentation(path) {
+                          fetch(path)
+                              .then(response => response.text())
+                              .then(html => {
+                                  contentEl.innerHTML = html;
+                                  listEl.classList.add('hidden');
+                                  contentEl.classList.remove('hidden');
+                                  backButton.style.display = 'block';
+                              })
+                              .catch(error => {
+                                  console.error('Error loading presentation:', error);
+                                  contentEl.innerHTML = '<p>Error loading presentation. Please try again.</p>';
+                              });
+                      }
+
+                      backButton.onclick = () => {
+                          listEl.classList.remove('hidden');
+                          contentEl.classList.add('hidden');
+                          backButton.style.display = 'none';
+                      };
+                  </script>
+              </body>
+              </html>
+              """
+              
+              with open('index.html', 'w', encoding='utf-8') as f:
+                  f.write(html_content)
+
+          create_index_html()
         shell: python
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add README.md
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update main README.md with folder contents" && git push)
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update interactive index.html for GitHub Pages" && git push)
